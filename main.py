@@ -4,17 +4,19 @@ from undetected_chromedriver import Chrome
 from selenium.webdriver.common.by import By
 
 load_dotenv()
-WEBSITE_URL = os.getenv("WEBSITE_URL")
+SEARCH_URL = os.getenv("SEARCH_URL")
+PRODUCTS_CSV = os.getenv("PRODUCTS_CSV")
 
 
 def main():
     driver = Chrome()
-    driver.get(WEBSITE_URL)
+    products = [
+        product.strip().replace(" ", "+") for product in PRODUCTS_CSV.split(",")
+    ]
 
-    search_icon = driver.find_element(By.CLASS_NAME, "desktop-search-icon")
-    search_icon.click()
+    driver.get(f"{SEARCH_URL}?search={products[0]}")
 
-    input("Press Enter to Close")
+    input("Press Enter to Close: ")
     driver.close()
 
 
