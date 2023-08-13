@@ -8,6 +8,9 @@ load_dotenv()
 SEARCH_URL = os.getenv("SEARCH_URL")
 PRODUCTS_CSV = os.getenv("PRODUCTS_CSV")
 
+CSS_SELECTOR_PRODUCT = os.getenv("CSS_SELECTOR_PRODUCT")
+CSS_SELECTOR_DESCRIPTION = os.getenv("CSS_SELECTOR_DESCRIPTION")
+
 OUTPUT_CSV_FILENAME = "output.csv"
 CSV_HEADER = ["product_title", "product_description"]
 
@@ -37,11 +40,11 @@ def get_product_titles():
 def scrape_product_data(driver, product_title):
     driver.get(f"{SEARCH_URL}?search={product_title.replace(' ', '+')}")
 
-    product_result = driver.find_element(By.CSS_SELECTOR, "li.item.result")
+    product_result = driver.find_element(By.CSS_SELECTOR, CSS_SELECTOR_PRODUCT)
     product_result.click()
 
     product_description = driver.find_element(
-        By.CSS_SELECTOR, "div.product-description p:first-of-type"
+        By.CSS_SELECTOR, CSS_SELECTOR_DESCRIPTION
     ).text
 
     return (product_title, product_description)
