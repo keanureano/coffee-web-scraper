@@ -10,22 +10,24 @@ PRODUCTS_CSV = os.getenv("PRODUCTS_CSV")
 
 def main():
     driver = Chrome()
-    products = [
+    product_titles = [
         product.strip().replace(" ", "+") for product in PRODUCTS_CSV.split(",")
     ]
 
-    driver.get(f"{SEARCH_URL}?search={products[0]}")
+    product_data = []
 
-    product_result = driver.find_element(By.CSS_SELECTOR, "li.item.result")
-    product_result.click()
+    for product_title in product_titles:
+        driver.get(f"{SEARCH_URL}?search={product_title}")
 
-    product_description = driver.find_element(
-        By.CSS_SELECTOR, "div.product-description p:first-of-type"
-    ).text
+        product_result = driver.find_element(By.CSS_SELECTOR, "li.item.result")
+        product_result.click()
 
-    print(product_description)
+        product_description = driver.find_element(
+            By.CSS_SELECTOR, "div.product-description p:first-of-type"
+        ).text
+        product_data.append((product_title, product_description))
 
-    input()
+    print(product_data)
     driver.close()
 
 
