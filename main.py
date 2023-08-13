@@ -16,7 +16,16 @@ def main():
 
     driver.get(f"{SEARCH_URL}?search={products[0]}")
 
-    input("Press Enter to Close: ")
+    product_result = driver.find_element(By.CSS_SELECTOR, "li.item.result")
+    product_result.click()
+
+    product_description = driver.find_element(
+        By.CSS_SELECTOR, "div.product-description p:first-of-type"
+    ).text
+
+    print(product_description)
+
+    input()
     driver.close()
 
 
