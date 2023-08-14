@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 import os
 from undetected_chromedriver import Chrome
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 load_dotenv()
 SEARCH_URL = os.getenv("SEARCH_URL")
@@ -40,12 +42,20 @@ def get_product_titles():
 def scrape_product_data(driver, product_title):
     driver.get(f"{SEARCH_URL}?search={product_title.replace(' ', '+')}")
 
-    product_result = driver.find_element(By.CSS_SELECTOR, CSS_SELECTOR_PRODUCT)
+    product_result = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, CSS_SELECTOR_PRODUCT))
+    )
     product_result.click()
 
-    product_description = driver.find_element(
-        By.CSS_SELECTOR, CSS_SELECTOR_DESCRIPTION
-    ).text
+    product_description = (
+        WebDriverWait(driver, 10)
+        .until(
+            EC.visibility_of_element_located(
+                (By.CSS_SELECTOR, CSS_SELECTOR_DESCRIPTION)
+            )
+        )
+        .text
+    )
 
     return (product_title, product_description)
 
