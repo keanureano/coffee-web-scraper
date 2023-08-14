@@ -1,6 +1,6 @@
 # Coffee Web Scraper
 
-Coffee Web Scraper is a Python program that uses Selenium to scrape data and export it as a CSV. It efficiently extracts product descriptions for a list of coffee-related items from a designated website. The collected data is then organized and saved in a CSV file for further analysis.
+Developed a Python tool called "Coffee Web Scraper" using Selenium. It scrapes coffee product details from a specific website and saves them in a CSV file. Makes analyzing the data easier.
 
 ## Features:
 
